@@ -17,9 +17,29 @@ def is_prime(n):
         i += 6
     return True
 
+def write_summary_to_file(prime_numbers, result_filename):
+    correct_count = 0
+    incorrect_count = 0
+
+    for prime in prime_numbers:
+        if is_prime(prime):
+            correct_count += 1
+        else:
+            incorrect_count += 1
+
+    total_count = correct_count + incorrect_count
+    if total_count > 0:
+        accuracy = (correct_count / total_count) * 100
+    else:
+        accuracy = 0
+
+    with open(result_filename, 'w') as result_file:
+        result_file.write(f"Total correct: {correct_count}\n")
+        result_file.write(f"Total incorrect: {incorrect_count}\n")
+        result_file.write(f"Accuracy: {accuracy:.2f}%\n")
+
 if __name__ == "__main__":
     filename = 'prime_numbers.txt'
+    result_filename = 'prime_check_summary.txt'
     prime_numbers = check_prime_numbers(filename)
-    for prime in prime_numbers:
-        if not is_prime(prime):
-            print(f"{prime} is not a prime number!")
+    write_summary_to_file(prime_numbers, result_filename)
